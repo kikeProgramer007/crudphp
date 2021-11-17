@@ -7,6 +7,19 @@
     // PARA EJECURAR LA CONSULTA
     $resultado = $mysqli->query($sql); //EL RESULTADO VA SER BOOLEANO
 
+    //ELIMINAR CARPETA
+    eliminarDir('files/'.$id);
+    function eliminarDir($carpeta){
+        foreach (glob($carpeta . "/*") as $archivos_carpeta) {
+            if (is_dir($archivos_carpeta)) {
+                eliminarDir($archivos_carpeta);
+            }else {
+                unlink($archivos_carpeta);
+            }
+        }
+        rmdir($carpeta);
+    }
+
 ?>
 
 <html lang="es">

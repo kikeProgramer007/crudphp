@@ -1,18 +1,6 @@
 <?php 
-    
+
     require 'conexion.php';    //PARA ESTABLECER CONEXION CON MYSQL
-  
-    $where = ""; // SE DECLARA UN ESPACIO VACIO
-	
-	if(!empty($_POST))  //SI LA VARIABLE POST NO EXITS ENTONCES
-	{
-		$valor = $_POST['campo'];
-		if(!empty($valor)){ //SI EL VALOR NO EXISTE ENTONCES
-			$where = "WHERE nombre LIKE '$valor%'";  //COMPARA SI ALGUNA LETRA SE PARECE A ALGUN REGISTRO
-		}
-	}
-	$sql = "SELECT * FROM personas $where"; //SI NO HAY NADA Q BUSCAR Q MUESTRE TODOS LOS REGISTROS
-	$resultado = $mysqli->query($sql);
 
 ?>
 
@@ -21,8 +9,42 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-theme.css" rel="stylesheet">
+		<link href="css/jquery.dataTables.min.css" rel="stylesheet">
+
         <script src="js/jquery-3.6.0.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+		<script src="js/jquery.dataTables.min.js"></script>
+
+		<script>
+			$(document).ready( function () {
+				$('#mitabla').DataTable({
+					"order":[[1,"asc"]],
+					"language": {
+						"decimal": "",
+						"emptyTable": "No hay información",
+						"info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+						"infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+						"infoFiltered": "(Filtrado de _MAX_ total entradas)",
+						"infoPostFix": "",
+						"thousands": ",",
+						"lengthMenu": "Mostrar _MENU_ Entradas",
+						"loadingRecords": "Cargando...",
+						"processing": "Procesando...",
+						"search": "Buscar:",
+						"zeroRecords": "Sin resultados encontrados",
+						"paginate": {
+							"first": "Primero",
+							"last": "Ultimo",
+							"next": "Siguiente",
+							"previous": "Anterior"
+						}
+					},
+					bProcessing:true,
+					bServerSide: true,
+					"sAjaxSource":"server_process.php"
+				});
+			} );
+		</script>
     </head>
     
     <body>
@@ -33,21 +55,15 @@
          <!-- ESTO ES PARA COLOCAR UN BOTON DE "NUEVO REGISTRO"-->
           <div class="row">
               <a href="nuevo.php" class="btn btn-primary">Nuevo registro </a><!--OJO ESTO REDIRRECIONA A "nuevo.php"-->
-
-            <!-- CREACION DEL FORMULARIO PARA BUSCAR UN REGISTRO -->
-              <form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
-					<b>Nombre: </b><input type="text" id="campo" name="campo" />
-					<input type="submit" id="enviar" name="enviar" value="Buscar" class="btn btn-info" /><!--class="btn btn-info" -- Es para el diseño del botom-->
-				</form>
-
           </div>
 
 
 
           <!--------- CREACION DEL DISEÑO DE LA TABLE ------------>
           <br> <!-- SALTO DE LINEA -->
-          <div class="row table-responsive">  <!--UNA TABLA RESPONSIVA ES DECIR SE AJUSTA DE MANERA AUTOMATICA-->
-                <table class="table table-striped">
+          <div class="row">  <!--UNA TABLA RESPONSIVA ES DECIR SE AJUSTA DE MANERA AUTOMATICA-->
+                <!-- <table class="table table-striped" > -->
+                <table class="display table-responsive" id="mitabla" >
                    <thead> <!--PARA AGREGAR LA CABECERA DE LA TABLE Q MOSTRARA LOS REGISTROS-->
 						<tr>  
 							<th>ID</th>
@@ -60,18 +76,7 @@
 				   </thead>
 
                     <tbody><!--PARA AGREGAR EL CUERPO DE LA TABLA Q MOSTRARA LOS REGISTROS  -->
-						<?php while($row = $resultado->fetch_array(MYSQLI_ASSOC)) { ?>  <!--<PHP> DEVUELVE PARAMETROS DE LA TABLE-->
-							<tr>
-								<td><?php echo $row['id']; ?></td>       <!--<PHP>MUESTRA EL ID DE LA BD-->
-								<td><?php echo $row['nombre']; ?></td>   <!--<PHP>MUESTRA NOMBRE ID DE LA BD-->
-								<td><?php echo $row['correo']; ?></td>   <!--<PHP>MUESTRA CORREO DE LA BD-->
-								<td><?php echo $row['telefono']; ?></td> <!--<PHP>MUESTRA TELF DE LA BD-->
-                                <!--<PHP-HTML> REDIRECCIONA AL ARC. modificar.php DEACUERDO A UN ID -->  <!--SE AGREGA EL ICONO DE MODIFICAR--->
-								<td><a href="modificar.php?id=<?php echo $row['id']; ?>"> <span class="glyphicon glyphicon-pencil"></span></a></td>
-                                <!--<PHP-HTML> REDIRECCIONA AL ARC. eliminar.php DEACUERDO A UN ID -->  <!--SE AGREGA EL ICONO DE ELIMINACION--->
-								<td><a href="#" data-href="eliminar.php?id=<?php echo $row['id']; ?>" data-toggle="modal" data-target="#confirm-delete"><span class="glyphicon glyphicon-trash"></span></a></td>
-							</tr>
-						<?php } ?>
+		
 					</tbody>
 
                 </table> <!-- ojo creo que es sin esto -->

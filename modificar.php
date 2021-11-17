@@ -16,6 +16,25 @@
         <script src="js/jquery-3.6.0.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
 
+		<script type="text/javascript">
+			$(document).ready(function (){
+				$('.delete').click(function () {
+					var parent = $(this).parent().attr('id');
+					var service = $(this).parent().attr('data');
+					var dataString = 'id='+service;
+
+					$.ajax({
+						type:"POST",
+						url:"del_file.php",
+						data: dataString,
+						success: function () {
+							location.reload();
+						}
+					});
+				});
+			});
+		</script>
+
     </head>
     <body>
 		<div class="container">
@@ -23,7 +42,7 @@
 				<h3 style="text-align:center">MODIFICAR REGISTRO</h3>
 			</div>
 			
-			<form class="form-horizontal" method="POST" action="update.php" autocomplete="off">
+			<form class="form-horizontal" method="POST" action="update.php" enctype="multipart/form-data" autocomplete="off">
             
             	<div class="form-group">
 					<label for="nombre" class="col-sm-2 control-label">Nombre</label>
@@ -104,7 +123,29 @@
 
 					</div>
 				</div>
-				
+
+				<div class="form-group">
+					<label for="archivo" class="col-sm-2 control-label">Archivo</label>
+					<div class="col-sm-10">
+						<input type="file" class="form-control" id="archivo" name="archivo" accept="image/*">
+
+						<?php 
+							$path = "files/".$id;
+							if (file_exists($path)) {
+								$directorio = opendir($path);
+								while ($archivo = readdir($directorio)) {
+									if (!is_dir($archivo)) {
+										echo "<div data='".$path."/".$archivo."'><a href='".$path."/".$archivo."' title='Ver archivo adjunto'><span class='glyphicon glyphicon-picture'></span></a>";
+										echo "$archivo <a href='#' class='delete' title='Ver archivo adjunto'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a></div>";
+										echo "<img src='files/$id/$archivo' width='300px'/>";
+									}
+								}
+							}
+						?>
+
+					</div>
+				</div>
+
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<a href="index.php" class="btn btn-default">Regresar</a>

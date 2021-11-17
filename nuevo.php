@@ -13,7 +13,7 @@
 				<h3 style="text-align:center">NUEVO REGISTRO</h3>
 			</div>
 			
-			<form class="form-horizontal" method="POST" action="guardar.php" autocomplete="off">
+			<form class="form-horizontal" method="POST" action="guardar.php" enctype="multipart/form-data" autocomplete="off">
             
             	<div class="form-group">
 					<label for="nombre" class="col-sm-2 control-label">Nombre</label>
@@ -83,6 +83,13 @@
 					</div>
 				</div>
 				
+				<div class="form-group">
+					<label for="archivo" class="col-sm-2 control-label">Archivo</label>
+					<div class="col-sm-10">
+						<input type="file" class="form-control" id="archivo" name="archivo" accept="image/*">
+					</div>
+				</div>
+
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<a href="index.php" class="btn btn-default">Regresar</a>
