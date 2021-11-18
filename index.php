@@ -7,13 +7,26 @@
 <html lang="es">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- ORIGINAL CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-theme.css" rel="stylesheet">
-		<link href="css/jquery.dataTables.min.css" rel="stylesheet">
-
+		<!-- <link href="css/jquery.dataTables.min.css" rel="stylesheet"> -->
+		<!-- datatables responisve NUEVO-->
+ 		<link href="css/datatables/bootstrap.min.css" rel="stylesheet">
+        <link href="css/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="css/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet">
+        <link href="css/datatables/responsive.bootstrap.min.css" rel="stylesheet">
+		<!-- ORIGINAL JS-->
         <script src="js/jquery-3.6.0.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-		<script src="js/jquery.dataTables.min.js"></script>
+		<!-- <script src="js/jquery.dataTables.min.js"></script> -->
+  		<!-- datatables rspnosive NUEVO -->
+		<!-- <script src="js/datatables/jquery-3.5.1.js"></script> -->
+        <script src="js/datatables/jquery.dataTables.min.js"></script>
+        <script src="js/datatables/dataTables.bootstrap.min.js"></script>
+        <script src="js/datatables/dataTables.fixedHeader.min.js"></script>
+        <script src="js/datatables/dataTables.responsive.min.js"></script>
+        <script src="js/datatables/responsive.bootstrap.min.js"></script>
 
 		<script>
 			$(document).ready( function () {
@@ -41,8 +54,10 @@
 					},
 					bProcessing:true,
 					bServerSide: true,
+					responsive: true,
 					"sAjaxSource":"server_process.php"
 				});
+				new $.fn.dataTable.FixedHeader( table );
 			} );
 		</script>
     </head>
@@ -63,7 +78,7 @@
           <br> <!-- SALTO DE LINEA -->
           <div class="row">  <!--UNA TABLA RESPONSIVA ES DECIR SE AJUSTA DE MANERA AUTOMATICA-->
                 <!-- <table class="table table-striped" > -->
-                <table class="display table-responsive" id="mitabla" >
+                <table  class="table table-striped table-bordered nowrap" style="width:100%"id="mitabla" >
                    <thead> <!--PARA AGREGAR LA CABECERA DE LA TABLE Q MOSTRARA LOS REGISTROS-->
 						<tr>  
 							<th>ID</th>
@@ -112,7 +127,7 @@
 				$('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
 			});
 		</script>	
-
+	
     </body>
 
 </html>
