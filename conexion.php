@@ -1,5 +1,5 @@
 <?php 
-    $mysqli = new mysqli('localhost','usuario007','1234567890','personal');
+    $mysqli = new mysqli('localhost','root','','phpnativo_personas');
     if($mysqli->connect_error){
         die('Error en la conexion' . $mysqli->connect_error);
     }

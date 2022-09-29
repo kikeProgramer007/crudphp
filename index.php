@@ -85,8 +85,8 @@
 							<th>Nombre</th>
 							<th>Email</th>
 							<th>Telefono</th>
-							<th></th>
-							<th></th>
+							<th width="1%"></th>
+							<th width="1%"></th>
 						</tr>
 				   </thead>
 

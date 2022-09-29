@@ -31,9 +31,9 @@
 	if($_FILES["archivo"]["error"]>0){
 		echo "Error al cargar archivo";
 	}else {
-		$permitidos= array("image/png","image/gif","application/pdf");
-		$limite_kb = 200;
-		if (in_array($_FILES["archivo"]["type"],$permitidos) && $_FILES["archivo"]["size"]<=$limite_kb * 1024) {
+		$permitidos= array("image/png","image/jpg","image/jpeg","image/gif","application/pdf");
+		$limite_kb = 6000;
+		if (in_array($_FILES["archivo"]["type"],$permitidos) && $_FILES["archivo"]["size"]<=($limite_kb * 1024)) {
 			$ruta = 'files/'.$id_insert.'/';
 			$archivo = $ruta.$_FILES["archivo"]["name"];
 			if (!file_exists($ruta)) {
@@ -52,7 +52,7 @@
 			}
 
 		}else {
-			echo "Archivo no permitido o excede el tamaño";
+			echo "Archivo no permitido o excede el tamañorr";
 		}
 	}
 ?>
